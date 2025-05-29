@@ -74,25 +74,32 @@ class DbHelper {
   static Future<void> fetchUser({
     required String email,
     required String password,
-    BuildContext? context,
+    required BuildContext context, // Make this required
   }) async {
     try {
       final AuthResponse res = await supabase.auth.signInWithPassword(
         email: email,
         password: password,
       );
-      if (res == null) {
+
+      if (res.user == null || res.session == null) {
         AppUtils.showSnackBar(
-          message: "Invalid email or Password",
-          context: context!,
+          message: "Invalid email or password",
+          context: context,
         );
+        return;
       }
+
       Navigator.pushReplacement(
-        context!,
+        context,
         MaterialPageRoute(builder: (context) => BottomNavBar()),
       );
     } catch (e) {
-      log('Error: $e');
+      log('Login error: $e');
+      AppUtils.showSnackBar(
+        message: "Something went wrong. Please try again.",
+        context: context,
+      );
     }
   }
 
