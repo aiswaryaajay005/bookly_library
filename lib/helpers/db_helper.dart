@@ -81,6 +81,12 @@ class DbHelper {
         email: email,
         password: password,
       );
+      if (res == null) {
+        AppUtils.showSnackBar(
+          message: "Invalid email or Password",
+          context: context!,
+        );
+      }
       Navigator.pushReplacement(
         context!,
         MaterialPageRoute(builder: (context) => BottomNavBar()),

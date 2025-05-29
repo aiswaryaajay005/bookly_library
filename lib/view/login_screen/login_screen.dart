@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:interview_task/controller/login_screen_controller.dart';
+import 'package:interview_task/utils/form_validation.dart';
 import 'package:interview_task/view/register_screen/register_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 24),
               TextFormField(
+                validator: (value) => FormValidation.validateEmail(value),
                 controller: screenState.emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
@@ -52,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 16),
               TextFormField(
+                validator: (value) => FormValidation.validatePassword(value),
                 controller: screenState.passwordController,
                 obscureText: screenState.obscure,
                 decoration: InputDecoration(
@@ -84,9 +87,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   onPressed: () {
-                    context.read<LoginScreenController>().login(
-                      context: context,
-                    );
+                    if (_formKey.currentState!.validate()) {
+                      context.read<LoginScreenController>().login(
+                        context: context,
+                      );
+                    } else {
+                      print("Not Valid");
+                    }
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(builder: (context) => HomeScreen()),

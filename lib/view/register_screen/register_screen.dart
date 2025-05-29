@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interview_task/controller/register_screen_controller.dart';
 import 'package:interview_task/utils/app_utils.dart';
+import 'package:interview_task/utils/form_validation.dart';
 import 'package:interview_task/view/login_screen/login_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -44,6 +45,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 24),
                   TextFormField(
+                    validator: (value) => FormValidation.validateName(value),
                     controller: screenState.nameController,
                     decoration: InputDecoration(
                       labelText: 'Name',
@@ -54,6 +56,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
                   TextFormField(
+                    validator: (value) => FormValidation.validateEmail(value),
                     controller: screenState.emailController,
                     decoration: InputDecoration(
                       labelText: 'Email',
@@ -64,6 +67,8 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
                   TextFormField(
+                    validator:
+                        (value) => FormValidation.validatePassword(value),
                     controller: screenState.passwordController,
                     obscureText: screenState.obscured,
                     decoration: InputDecoration(
@@ -88,6 +93,11 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 16),
                   TextFormField(
+                    validator:
+                        (value) => FormValidation.validateConfirmPassword(
+                          value,
+                          screenState.passwordController.text,
+                        ),
                     controller: screenState.confirmPasswordController,
                     obscureText: screenState.obscure,
                     decoration: InputDecoration(
@@ -120,9 +130,13 @@ class RegisterScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 16),
                       ),
                       onPressed: () async {
-                        context.read<RegisterScreenController>().register(
-                          context: context,
-                        );
+                        if (_formKey.currentState!.validate()) {
+                          context.read<RegisterScreenController>().register(
+                            context: context,
+                          );
+                        } else {
+                          print("Error");
+                        }
                       },
                       child: Text(
                         'Sign Up',
