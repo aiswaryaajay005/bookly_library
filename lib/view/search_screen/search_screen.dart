@@ -119,6 +119,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                             ? book.authors![0].name ??
                                                 'Unknown Author'
                                             : 'Unknown Author',
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
                                           fontSize: 14,

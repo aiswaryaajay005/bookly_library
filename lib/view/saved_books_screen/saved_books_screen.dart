@@ -27,7 +27,7 @@ class _SavedBooksScreenState extends State<SavedBooksScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Saved Books', style: TextStyle(color: Colors.white)),
+        title: Text('Favourite Books', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.green,
       ),
       body:
